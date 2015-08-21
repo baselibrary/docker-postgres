@@ -1,7 +1,5 @@
 # baselibrary/postgres [![Docker Repository on Quay.io](https://quay.io/repository/baselibrary/postgres/status "Docker Repository on Quay.io")](https://quay.io/repository/baselibrary/postgres)
 
-[![](http://dockeri.co/image/baselibrary/postgres)](https://registry.hub.docker.com/u/baselibrary/postgres/)
-
 ## Installation and Usage
 
     docker pull quay.io/baselibrary/postgres:${VERSION:-latest}
