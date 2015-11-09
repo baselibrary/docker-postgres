@@ -1,0 +1,35 @@
+FROM baselibrary/baseimage:1.0.0
+MAINTAINER ShawnMa <qsma@thoughtworks.com>
+
+## Version
+ENV POSTGRES_MAJOR   %%POSTGRES_MAJOR%%
+ENV POSTGRES_VERSION %%POSTGRES_VERSION%%
+
+## Repository
+RUN \
+  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ACCC4CF8 &&\
+  echo "deb http://apt.postgresql.org/pub/repos/apt trusty-pgdg main" > /etc/apt/sources.list.d/postgres.list
+
+## Packages
+RUN \
+  apt-get update &&\
+  apt-get install -y postgresql-%%POSTGRES_MAJOR%%-postgis-2.1=$POSTGRES_VERSION postgresql-contrib-%%POSTGRES_MAJOR%% python-psycopg2 &&\
+  rm -rf /var/lib/apt/lists/*
+
+## Environments
+ENV PATH   /usr/lib/postgresql/%%POSTGRES_MAJOR%%/bin:$PATH
+ENV PGDATA /var/lib/postgresql/data
+
+## Scripts
+ADD docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod a+x            /docker-entrypoint.sh
+
+EXPOSE 5432
+
+ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+
+VOLUME ["/var/lib/postgresql/data"]
+
+CMD ["postgres"]
+
+
