@@ -16,6 +16,11 @@ RUN \
   apt-get install -y postgresql-9.4-postgis-2.1=$POSTGRES_VERSION postgresql-contrib-9.4 python-psycopg2 &&\
   rm -rf /var/lib/apt/lists/*
 
+## Tools
+RUN \
+  wget -O /bin/gosu "https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64" &&\
+  chmod u+x /bin/gosu
+
 ## Environments
 ENV PATH   /usr/lib/postgresql/9.4/bin:$PATH
 ENV PGDATA /var/lib/postgresql/data
@@ -26,7 +31,7 @@ RUN chmod a+x            /docker-entrypoint.sh
 
 EXPOSE 5432
 
-ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 VOLUME ["/var/lib/postgresql/data"]
 
