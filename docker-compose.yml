@@ -1,0 +1,7 @@
+database:
+  image: baselibrary/postgres:9.4
+  environment:
+    - POSTGRES_USER=rapidpro
+    - POSTGRES_DATABASE=rapidpro
+    - POSTGRES_PASSWORD=rapidpro
+    - POSTGRES_EXTENSIONS_POSTGIS=true
